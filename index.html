@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/michigan-tag-logo.gif">
+  <title>Home</title>
+  <!-- Custom CSS -->
+  <link href="./assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+  <link href="./assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
+  <link href="./dist/css/style.min.css" rel="stylesheet">
+  <style>
+    .container.nav-container {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      height: 60px;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin-right: auto;
+      margin-left: auto;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .navbar-brand {
+      display: inline-block;
+      padding-top: 0.33594rem;
+      padding-bottom: 0.33594rem;
+      margin-right: 1rem;
+      font-size: 2rem;
+      line-height: inherit;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    .nav-link {
+      margin-left: 20px;
+      padding: 10px;
+      border-bottom: 2px solid transparent;
+      -webkit-transition: border-color 200ms ease;
+      transition: border-color 200ms ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      border-bottom-color: rgba(241, 196, 15, 0.34);
+    }
+
+    .bg-home {
+      background-image: url(./assets/images/home.PNG);
+      height: 470px;
+      background-position: 0px -53px, 50% 52%;
+      color: #fff;
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+
+    .padding-top-13 {
+      padding-top: 13%;
+    }
+
+    .third-sec {
+      background-color: #222222;
+      color: #fff;
+    }
+
+    .third-sec h1 {
+      margin-top: 0px;
+      margin-bottom: 24px;
+      font-size: 52px;
+      line-height: 1.2em;
+      font-weight: 700;
+    }
+
+    h5 {
+      line-height: 25px;
+    }
+
+    .separator.primary {
+      background-color: #f1c40f;
+    }
+
+    .separator {
+      width: 60px;
+      height: 6px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      background-color: #222;
+    }
+
+    .modal-dialog-width {
+      max-width: 800px;
+    }
+
+    .form-control {
+      border: none;
+      border-bottom: 1px solid #e9ecef;
+      color: #000;
+      font-weight: 700;
+    }
+
+    .submit-button-clr {
+      padding: 10px 65px;
+      font-size: 18px;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .bg-home {
+        background-image: url(./assets/images/home.PNG);
+        height: 470px;
+        background-position: 0px -53px, 50% 52%;
+        color: #fff;
+        background-repeat: no-repeat;
+        background-size: auto;
+        padding-top: 40%;
+      }
+
+      .navbar-collapse {
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        background: #fff;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) {
+      .modal.fade:not(.in).right .modal-dialog {
+        -webkit-transform: translate3d(25%, 0, 0);
+        transform: translate3d(43%, 0, 0);
+      }
+
+      .modal.fade:not(.in).right.two .modal-dialog {
+        -webkit-transform: translate3d(25%, 0, 0);
+        transform: translate3d(85%, 0, 0);
+      }
+
+      .login.auth-wrapper .auth-box {
+        background: #fff;
+        padding: 20px;
+        max-width: 400px;
+        width: 100%;
+        margin: 10% 0;
+      }
+
+      .login.modal-content {
+        width: 400px;
+      }
+
+      .cls-btn {
+        position: relative;
+        bottom: 36px;
+        left: 24px;
+      }
+
+      .cls-btn-to {
+        position: relative;
+        bottom: 55px;
+        left: 45px;
+      }
+
+      .modal-dialog-cust {
+        top: 33px;
+        right: 105px;
+      }
+
+    }
+
+    footer hr {
+      border-color: #9294a0;
+    }
+
+    .footer-bottom p {
+      text-align: right;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+    }
+
+    .open-hours hr {
+      margin: 30px 0;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================== -->
+  <!-- Preloader - style you can find in spinners.css -->
+  <!-- ============================================================== -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
+    </div>
+  </div>
+
+  <div id="main-wrapper home-page">
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+        <div class="container nav-container">
+          <a class="navbar-brand" href="#"><img src="./assets/images/michigan-tag-logo.gif" height="50" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+
+            <span class="navbar-text mr-auto">
+              <!-- Navbar text with an inline element -->
+            </span>
+
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="#"><b>About us</b></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#"><b>Services</b></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#"><b>Features</b></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" data-target="#staticBackdrop" data-toggle="modal"><b>Login</b></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" data-target="#signupstaticBackdrop" data-toggle="modal"><b>Registration</b></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Signin Modal -->
+      <!-- <div class="modal fade right" id="staticBackdrop" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-cust">
+          <div class="login modal-content" style="border: none;">
+            <div class="modal-body p-0">
+              <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+                style="min-height: auto">
+                <div class="login auth-box  border-secondary m-0 pl-0 pr-0">
+                  <div style=" text-align: center;">
+                    <h3>COLLABFOR</h3>
+                    <button type="button" class="close cls-btn-to" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div id="loginform">
+                    <form class="form-horizontal m-t-20" id="loginform" action="index.html">
+                      <div class="row p-b-30">
+                        <div class="col-12">
+                         <div class="form-group col-md-12 pb-3">
+                            <input type="text" class="form-control" placeholder="Username">
+                          </div>
+                          <div class="form-group col-md-12">
+                            <input type="password" class="form-control" placeholder="Password">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row border-secondary">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <div style="text-align: center;">
+                             <button class="col-sm-6 btn btn-danger submit-button-clr" type="submit">Sign
+                                In</button>
+                              <h5 style="color: #000;" class="pt-3 pb-3">
+                                Or sign up with:</h5>
+                            </div>
+                            <div style="text-align: center;">
+                              <button class="btn btn-success" type="submit"
+                                style="font-size: 20px;background: #0e76a8; border: none;">
+                                <i class="ti-linkedin"></i>
+                              </button>
+
+                              <button class="btn btn-success" type="submit"
+                                style="font-size: 20px;background: #000;border: none;">
+                                <i class="ti-github"></i>
+                              </button>
+
+                              <button class="btn btn-success bg-warning" type="submit"
+                                style="font-size: 20px;border: none;">
+                                <i class="ti-stack-overflow"></i>
+                              </button>
+
+                              <button class="btn btn-success" type="submit" style="font-size: 20px;">
+                                H
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      <div class="modal fade right" id="staticBackdrop" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-cust modal-dialog-width">
+          <div class="modal-content" style="border: none;">
+            <div class="modal-body p-0">
+              <div class="row">
+                <div class="col-sm-5 btn-danger">
+                  <!-- <div class="text-center display-7">Register Now!</div> -->
+                  <img src="./assets/images/login.png" style="width: 100%;" class="pt-4 pb-4" />
+                  <div class="pl-4 pr-4">
+                    <small>
+                      It is a long established fact that a reader will be distracted by the readable content of a page
+                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-sm-7 pr-5 pl-5">
+                  <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+                    style="min-height: auto">
+                    <div class="login auth-box  border-secondary m-0 pl-0 pr-0">
+                      <div style=" text-align: center;">
+                        <h3>COLLABFOR</h3>
+                        <button type="button" class="close cls-btn-to" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="loginform">
+                        <!-- Form -->
+                        <form class="form-horizontal m-t-20" id="loginform" action="index.html">
+                          <div class="row p-b-30">
+                            <div class="col-12">
+                              <!-- <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text bg-success text-white" id="basic-addon1"><i
+                                  class="ti-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control form-control-lg" placeholder="Username"
+                              aria-label="Username" aria-describedby="basic-addon1" required>
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text bg-warning text-white" id="basic-addon2"><i
+                                  class="ti-pencil"></i></span>
+                            </div>
+                            <input type="password" class="form-control form-control-lg" placeholder="Password"
+                              aria-label="Password" aria-describedby="basic-addon1" required>
+                          </div> -->
+                              <div class="form-group col-md-12 pb-3">
+                                <input type="text" class="form-control" placeholder="Username">
+                              </div>
+                              <div class="form-group col-md-12">
+                                <input type="password" class="form-control" placeholder="Password">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row border-secondary">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <div style="text-align: center;">
+                                  <!-- <button class="btn btn-info" id="to-recover" type="button" data-dismiss="modal"><i class="fa fa-lock m-r-5"></i> Lost password?</button> -->
+                                  <button class="col-sm-6 btn btn-danger submit-button-clr" type="submit">Sign
+                                    In</button>
+                                  <h5 style="color: #000;" class="pt-3 pb-3">
+                                    Or sign up with:</h5>
+                                </div>
+                                <div style="text-align: center;">
+                                  <button class="btn btn-success" type="submit"
+                                    style="font-size: 20px;background: #0e76a8; border: none;">
+                                    <i class="ti-linkedin"></i>
+                                  </button>
+
+                                  <button class="btn btn-success" type="submit"
+                                    style="font-size: 20px;background: #000;border: none;">
+                                    <i class="ti-github"></i>
+                                  </button>
+
+                                  <button class="btn btn-success bg-warning" type="submit"
+                                    style="font-size: 20px;border: none;">
+                                    <i class="ti-stack-overflow"></i>
+                                  </button>
+
+                                  <button class="btn btn-success" type="submit" style="font-size: 20px;">
+                                    H
+                                  </button>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signup Modal -->
+      <div class="modal fade right" id="signupstaticBackdrop" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-cust modal-dialog-width">
+          <div class="modal-content" style="border: none;">
+            <div class="modal-body p-0">
+              <div class="row">
+                <div class="col-sm-5 btn-danger">
+                  <!-- <div class="text-center display-7">Register Now!</div> -->
+                  <img src="./assets/images/Register-Now.png" style="width: 100%;" class="pt-4 pb-4" />
+                  <div class="pl-4 pr-4">
+                    <small>
+                      It is a long established fact that a reader will be distracted by the readable content of a page
+                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                    </small>
+                  </div>
+                </div>
+                <div class="col-sm-7 pr-5 pl-5">
+                  <div class="pt-3 pb-3 pl-3">
+                    <h3 style="color: #da542e;">Please Fill With Your Details</h3>
+                    <button type="button" class="close cls-btn" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="row pb-4">
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="text" class="form-control" placeholder="Username">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="text" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="number" class="form-control" placeholder="Contact No">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="text" class="form-control" placeholder="Enter OTP">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <button type="button" class="btn btn-link">Verify OTP</button>
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group col-md-6 pb-3">
+                      <input type="password" class="form-control" placeholder="Confirm Password">
+                    </div>
+
+                  </div>
+
+                  <div style="text-align:center" class="pb-5">
+                    <button type="button" class="btn btn-danger submit-button-clr font-weight-bold">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bg-home">
+      <div class="container nav-container padding-top-13">
+        <div style="text-align: center; width: 100%">
+
+          <h2 class="pb-3">Reinvent your market with Softy</h2>
+          <h4 style="line-height: 25px;">
+            Perfect template for tech business, software house or digital agency. Modern design <br /> connected with
+            Webflow, powerful CMS for blog, team, career and case studies.
+          </h4>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container nav-container" style="height: 300px;">
+      <div class="row" style="width: 100%">
+        <div class="col-sm-8">
+          <h5>
+            We create apps, branding, custom <br />websites. We help businesses to work<br />efficiently.
+          </h5>
+        </div>
+        <div class="col-sm">
+          <h5>
+            Would you like to work with us?
+          </h5>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="third-sec">
+      <div style="height: auto;" class="row">
+        <div class="col-sm-5" style="padding-left: 13%;padding-top: 10%;
+        padding-right: 5%;">
+          <h1>
+            We work with great people
+          </h1>
+          <p style=" margin-bottom: 10px;
+         font-size: 16px;
+         line-height: 1.6em;"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
+            elementum tristique.</p>
+        </div>
+
+        <div class="col-sm">
+          <img src="./assets/images/prpo.jpeg" style="width: 100%;border: 15px solid #222222;" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="third-sec pb-5">
+      <div style="height: auto;" class="container nav-container">
+
+        <div style="width: 100%;">
+          <h1>
+            What we can<br />
+            do for you
+          </h1>
+          <h5>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br /> Suspendisse varius enim in eros elementum
+            tristique. Duis cursus,<br /> mi quis viverra ornare.
+          </h5>
+          <div class="separator primary"></div>
+
+          <div class="row">
+            <div class="col-sm">
+              <h3>Product Design</h3>
+              <h5>
+                The rich text element allows you to create and format headings, paragraphs, blockquotes, images, and
+                video
+                all in one place instead of having to add and format them individually. Just double-click and easily
+                create content.
+              </h5>
+
+              <ul class="pl-3">
+                <li>
+                  <h5>
+                    Static and dynamic content editing
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    A rich text element can be used
+                  </h5>
+                </li>
+              </ul>
+
+            </div>
+            <div class="col-sm">
+              <h3>Webflow Development</h3>
+              <h5>
+                The rich text element allows you to create and format headings, paragraphs, blockquotes, images, and
+                video
+                all in one place instead of having to add and format them individually. Just double-click and easily
+                create content.
+              </h5>
+
+              <ul class="pl-3">
+                <li>
+                  <h5>
+                    Static and dynamic content editing
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    A rich text element can be used
+                  </h5>
+                </li>
+              </ul>
+
+            </div>
+            <div class="col-sm">
+              <h3>Analytics</h3>
+              <h5>
+                The rich text element allows you to create and format headings, paragraphs, blockquotes, images, and
+                video
+                all in one place instead of having to add and format them individually. Just double-click and easily
+                create content.
+              </h5>
+
+              <ul class="pl-3">
+                <li>
+                  <h5>
+                    Static and dynamic content editing
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    A rich text element can be used
+                  </h5>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <!-- <div>
+      <div style="height: auto;" class="container nav-container pt-5 pb-3">
+
+        <div style="width: 100%;">
+          <div class="row">
+            <div class="col-sm">
+              <a class="navbar-brand" href="#" style="color: black;">Collabfor</a>
+            </div>
+            <div class="col-sm">
+              <ul class="pl-3">
+                <li>
+                  <h5>Menu</h5>
+                </li>
+                <li>
+                  <h5>About us</h5>
+                </li>
+                <li>
+                  <h5>Services</h5>
+                </li>
+                <li>
+                  <h5>Team</h5>
+                </li>
+                <li>
+                  <h5>
+                    Blog
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    Careers
+                  </h5>
+                </li>
+              </ul>
+
+
+            </div>
+            <div class="col-sm">
+
+              <ul class="pl-3">
+                <li>
+                  <h5>Services</h5>
+                </li>
+                <li>
+                  <h5>Product Design</h5>
+                </li>
+                <li>
+                  <h5>Analytics</h5>
+                </li>
+                <li>
+                  <h5>Machine Learning</h5>
+                </li>
+              </ul>
+
+            </div>
+            <div class="col-sm">
+              <ul class="pl-3">
+                <li>
+                  <h5>
+                    Privacy
+                  </h5>
+                </li>
+                <li>
+                  <h5>
+                    License
+                  </h5>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div> -->
+    <div class="container nav-container">
+      <div class="footer-bottom" style="width: 100%;">
+        <div class="row">
+          <div class="col-sm-4">
+            <a href=""><b>Privacy policy</b></a>
+          </div>
+          <div class="col-sm-8">
+            <p><b> All rights reserved | CollabFor 2020 </b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="./dist/js/jquery.ui.touch-punch-improved.js"></script>
+  <script src="./dist/js/jquery-ui.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="./assets/libs/popper.js/dist/umd/popper.min.js"></script>
+  <script src="./assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- slimscrollbar scrollbar JavaScript -->
+  <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="./dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="./dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="./dist/js/custom.min.js"></script>
+  <!-- this page js -->
+  <script src="./assets/libs/moment/min/moment.min.js"></script>
+  <script src="./assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <script src="./dist/js/pages/calendar/cal-init.js"></script>
+
+</body>
+
+</html>
