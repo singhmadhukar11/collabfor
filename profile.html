@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/michigan-tag-logo.gif">
+    <title>Collabfor</title>
+    <!-- Custom CSS -->
+    <link href="./assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="./dist/css/style.min.css" rel="stylesheet">
+    <style>
+        /*custom font*/
+        @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+        body {
+            font-family: montserrat, arial, verdana;
+            background: transparent;
+        }
+
+        /*form styles*/
+        #msform {
+            text-align: center;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 1px solid #dedede;
+            border-radius: 0px;
+            /* box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4); */
+            padding: 20px 30px;
+            box-sizing: border-box;
+            width: 100%;
+            /* margin: 0 10%; */
+
+            /*stacking fieldsets above each other*/
+            position: relative;
+        }
+
+        /*Hide all except first fieldset*/
+        #msform fieldset:not(:first-of-type) {
+            display: none;
+        }
+
+        /*inputs*/
+        #msform input,
+        #msform textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+        }
+
+        #msform input:focus,
+        #msform textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #404E68;
+            outline-width: 0;
+            transition: All 0.5s ease-in;
+            -webkit-transition: All 0.5s ease-in;
+            -moz-transition: All 0.5s ease-in;
+            -o-transition: All 0.5s ease-in;
+        }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #C5C5F1;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            /* border-radius: 25px; */
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+            float: right;
+        }
+
+        /*buttons*/
+        #msform .action-button {
+            width: 100px;
+            background: #404E68;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            /* border-radius: 25px; */
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+            float: right;
+        }
+
+        #msform .action-button:hover,
+        #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #404E68;
+        }
+
+
+
+        #msform .action-button-previous:hover,
+        #msform .action-button-previous:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
+        }
+
+        /*headings*/
+        .fs-title {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .fs-subtitle {
+            font-weight: normal;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /*progressbar*/
+        #progressbar {
+            margin-bottom: 30px;
+            overflow: hidden;
+            /*CSS counters to number the steps*/
+            counter-reset: step;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            color: grey;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 800;
+            width: 23%;
+            float: left;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        #progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 50px;
+            height: 50px;
+            line-height: 26px;
+            display: block;
+            font-size: 12px;
+            color: #B0BCCC;
+            background: #B0BCCC;
+            border-radius: 25px;
+            margin: 0 auto 10px auto;
+        }
+
+        /*progressbar connectors*/
+        #progressbar li:after {
+            content: '';
+            width: 82%;
+            height: 5px;
+            background: #B0BCCC;
+            position: absolute;
+            left: -41%;
+            top: 21px;
+            /* z-index: -1; */
+            /*put it behind the numbers*/
+        }
+
+        #progressbar li:first-child:after {
+            /*connector not needed before the first step*/
+            content: none;
+        }
+
+        /*marking active/completed steps green*/
+        /*The number of the step and the connector before it = green*/
+        #progressbar li.active:before {
+            background: #404E68;
+            color: #404E68;
+            /* z-index: 9; */
+        }
+
+        #progressbar li.active:after {
+            background: #404E68;
+            color: white;
+            z-index: 9;
+        }
+
+
+        /* Not relevant to this form */
+        .dme_link {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .dme_link a {
+            background: #FFF;
+            font-weight: bold;
+            color: #404E68;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 5px 25px;
+            font-size: 12px;
+        }
+
+        .dme_link a:hover,
+        .dme_link a:focus {
+            background: #C5C5F1;
+            text-decoration: none;
+        }
+
+        .container-fluid.p-0 {
+            background-color: #fff !important;
+        }
+
+        .text-align-left {
+            text-align: left;
+            display: inherit;
+        }
+
+        .page-wrapper>.container-fluid {
+            padding: 20px;
+            min-height: calc(100vh - 65px);
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <!-- <a class="navbar-brand" href="index.html">
+                        <b class="logo-icon p-l-10">
+                            <img src="./assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+
+                        </b>
+                        <span class="logo-text">
+                            <img src="./assets/images/logo-text.png" alt="homepage" class="light-logo" />
+
+                        </span>
+                    </a>
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a> -->
+
+                    <span style="font-size: x-large;
+                            font-weight: 800;
+                            text-align: center;
+                            color: #fff;
+                            padding-left: 20px;">COLLABFOR</span style="">
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a
+                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="./assets/images/users/5.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i>
+                                    My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i>
+                                    My Balance</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i>
+                                    Inbox</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                        class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i
+                                        class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                <div class="dropdown-divider"></div>
+                                <div class="p-l-30 p-10"><a href="javascript:void(0)"
+                                        class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="dashboard.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                    class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="profile.html" aria-expanded="false"><i class="mdi mdi-account"></i><span
+                                    class="hide-menu">Profile</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="hackthon.html" aria-expanded="false"><i class="mdi mdi-lightbulb-on"></i><span
+                                    class="hide-menu">Hackthon</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="jobs.html" aria-expanded="false"><i class="mdi mdi-briefcase"></i><span
+                                    class="hide-menu">Jobs</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="collobrate.html" aria-expanded="false"><i class="mdi mdi-teamviewer"></i><span
+                                    class="hide-menu">Collobrate</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="blog.html" aria-expanded="false"><i class="mdi mdi-pencil-box"></i><span
+                                    class="hide-menu">Post/Blog</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="Recommendation.html" aria-expanded="false"><i class="mdi mdi-thumb-up"></i><span
+                                    class="hide-menu">Recommendation</span></a></li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+
+            <div class="container-fluid p-0">
+
+                <div class="card">
+                    <h5 class="card-title pl-4 pt-3 pb-3 mb-0"
+                        style="background-color:#1F262D; color:#fff; font-weight:700; text-transform:uppercase">Add New
+                        Profile</h5>
+                    <div class="card-body">
+
+                        <!-- MultiStep Form -->
+                        <div class="row">
+                            <div class="col-md-12 col-md-offset-3">
+                                <form id="msform">
+                                    <!-- progressbar -->
+                                    <ul id="progressbar">
+                                        <li class="active">Profile</li>
+                                        <li>Employment</li>
+                                        <li>Job Preference</li>
+                                        <li>Acheivement</li>
+
+                                    </ul>
+                                    <!-- fieldsets -->
+                                    <fieldset>
+                                        <!-- <h2 class="fs-title">Personal Details</h2>
+                                        <h3 class="fs-subtitle">Tell us something more about you</h3> -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 pl-0">
+                                                            <label class="mb-0 pt-2 text-align-left">Upload
+                                                                Image</label>
+                                                        </div>
+                                                        <div class="col-sm pl-0">
+                                                            <input type="file" class="form-control-file">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="mb-0 pt-2 text-align-left">Name</label>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <input type="text" name="name" placeholder="Name" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="mb-0 pt-2 text-align-left">Email</label>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <input type="text" name="Email" placeholder="Email" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="mb-0 pt-2 text-align-left">Phone No</label>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <input type="text" name="phone" placeholder="Phone No" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="mb-0 pt-2 text-align-left">Address</label>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <input type="text" name="lname" placeholder="Address" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label class="mb-0 pt-2 text-align-left">Total
+                                                                Experience</label>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <select class="form-control" id="exampleFormControlSelect2">
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <label class="mb-0 pt-2 text-align-left">Annual
+                                                                Salary</label>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <select class="form-control" id="exampleFormControlSelect2">
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="button" name="next" class="next action-button" value="Next" />
+                                    </fieldset>
+                                    <fieldset>
+
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pl-0">
+                                                        <label class="mb-0 pt-2 text-align-left">Attach Resume</label>
+                                                    </div>
+                                                    <div class="col-sm pl-0">
+                                                        <input type="file" class="form-control-file mb-0">
+                                                        <small>Supported Formats: doc, docx, rtf, pdf, upto 2 MB
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <label class="mb-0 pt-2 text-align-left">Resume Heading</label>
+                                                    <input type="text" name="lname" placeholder="" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <label class="mb-0 pt-2 text-align-left">Key Skills</label>
+                                                    <input type="text" name="lname" placeholder="" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <label class="mb-0 pt-2 text-align-left">Employment Details</label>
+                                                    <input type="text" name="lname" placeholder="" />
+                                                </div>
+                                                <div class="col-sm-2" style="padding-top: 5px;">
+                                                    <button type="button" class="btn btn-primary mt-4"
+                                                        style="background:#404E68">Add Employment</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <label class="mb-0 pt-2 text-align-left">Project Details</label>
+                                                    <input type="text" name="lname" placeholder="" />
+                                                </div>
+                                                <div class="col-sm-2" style="padding-top: 5px;">
+                                                    <button type="button" class="btn btn-primary mt-4"
+                                                        style="background:#404E68">Add Project</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <input type="button" name="next" class="next action-button" value="Next" />
+                                        <input type="button" name="previous" class="previous action-button-previous"
+                                            value="Previous" />
+
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label class="mb-0 pt-2 text-align-left">Desire Job Title</label>
+                                                <input type="text" name="lname" placeholder="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-align-left">
+                                            <label for="exampleFormControlSelect1">Desired Job Type</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                              <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="form-group text-align-left">
+                                            <label for="exampleFormControlSelect1">Desired Salary</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                              <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="form-group text-align-left">
+                                            <label for="exampleFormControlSelect1">Desired Location</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                              <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="form-group text-align-left">
+                                            <label for="exampleFormControlSelect1">Relocation</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                              <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                            </select>
+                                          </div>
+
+                                        <input type="button" name="next" class="next action-button" value="Next" />
+                                        <input type="button" name="previous" class="previous action-button-previous"
+                                            value="Previous" />
+
+                                    </fieldset>
+                                    <fieldset>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label class="mb-0 pt-2 text-align-left">Achivement</label>
+                                                <input type="text" name="lname" placeholder="" />
+                                            </div>
+                                            <div class="col-sm-2" style="padding-top: 5px;">
+                                                <button type="button" class="btn btn-primary mt-4"
+                                                    style="background:#404E68">Add Achivement</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label class="mb-0 pt-2 text-align-left">Language</label>
+                                                <input type="text" name="lname" placeholder="" />
+                                            </div>
+                                            <div class="col-sm-2" style="padding-top: 5px;">
+                                                <button type="button" class="btn btn-primary mt-4"
+                                                    style="background:#404E68">Add Language</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label class="mb-0 pt-2 text-align-left">Courses</label>
+                                                <input type="text" name="lname" placeholder="" />
+                                            </div>
+                                            <div class="col-sm-2" style="padding-top: 5px;">
+                                                <button type="button" class="btn btn-primary mt-4"
+                                                    style="background:#404E68">Add Courses</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label class="mb-0 pt-2 text-align-left">Honours and Awards</label>
+                                                <input type="text" name="lname" placeholder="" />
+                                            </div>
+                                            <div class="col-sm-2" style="padding-top: 5px;">
+                                                <button type="button" class="btn btn-primary mt-4"
+                                                    style="background:#404E68">Add Awards</button>
+                                            </div>
+                                        </div>
+
+                                        <input type="submit" name="submit" class="submit action-button"
+                                            value="Submit" />
+                                        <input type="button" name="previous" class="previous action-button-previous"
+                                            value="Previous" />
+
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.MultiStep Form -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <style>
+        .dataTables_length {
+            visibility: hidden;
+        }
+    </style>
+    <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="./dist/js/jquery.ui.touch-punch-improved.js"></script>
+    <script src="./dist/js/jquery-ui.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="./dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="./dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="./dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="./assets/libs/moment/min/moment.min.js"></script>
+    <script src="./assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="./dist/js/pages/calendar/cal-init.js"></script>
+    <!-- this page js -->
+    <script src="./assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="./assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="./assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script>
+        //jQuery time
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50) + "%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'transform': 'scale(' + scale + ')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({
+                        'left': left,
+                        'opacity': opacity
+                    });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".previous").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //de-activate current step on progressbar
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale previous_fs from 80% to 100%
+                    scale = 0.8 + (1 - now) * 0.2;
+                    //2. take current_fs to the right(50%) - from 0%
+                    left = ((1 - now) * 50) + "%";
+                    //3. increase opacity of previous_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'left': left
+                    });
+                    previous_fs.css({
+                        'transform': 'scale(' + scale + ')',
+                        'opacity': opacity
+                    });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".submit").click(function () {
+            return false;
+        })
+    </script>
+
+
+</body>
+
+</html>
